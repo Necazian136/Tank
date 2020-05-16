@@ -1,18 +1,13 @@
 import time
 import cv2
 import threading
-# import RPi.GPIO as GPIO
 
 
 class Camera:
     def __init__(self):
-        #GPIO.setmode(GPIO.BCM)
-        #GPIO.setup(7, GPIO.OUT)
-        self.cap = cv2.VideoCapture(0)
-        self.delay = 15
         self.frame = None
         self.buf = None
-        self.file_path = 'application/static/images/camera_view.png'
+        self.file_path = 'application/static/images/camera_view.jpg'
         self.is_active = False
         self.__in_stream = False
         self.restart()
@@ -47,4 +42,3 @@ class Camera:
 
     def __del__(self):
         pass
-        # GPIO.cleanup()

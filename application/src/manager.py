@@ -6,6 +6,8 @@ class TankManager:
         self.motor_1 = {'A': 36, 'B': 38, 'E': 40}
         self.motor_2 = {'A': 37, 'B': 35, 'E': 33}
 
+        GPIO.setmode(GPIO.BOARD)
+
         GPIO.setup(self.motor_1['A'], GPIO.OUT)
         GPIO.setup(self.motor_1['B'], GPIO.OUT)
         GPIO.setup(self.motor_1['E'], GPIO.OUT)
@@ -46,4 +48,6 @@ class TankManager:
         GPIO.output(motor['E'], GPIO.HIGH)
 
     def motor_stop(self, motor):
-        GPIO.output(motor['E'], GPIO.HIGH)
+        GPIO.output(motor['A'], GPIO.LOW)
+        GPIO.output(motor['B'], GPIO.LOW)
+        GPIO.output(motor['E'], GPIO.LOW)
