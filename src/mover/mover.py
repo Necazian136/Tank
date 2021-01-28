@@ -1,8 +1,9 @@
+# noinspection PyUnresolvedReferences
 import RPi.GPIO as GPIO
 
 
-class TankManager:
-    def __init__(self):
+class Mover:
+    def __init__(self, mediator):
         self.motor_1 = {'A': 36, 'B': 38, 'E': 40}
         self.motor_2 = {'A': 37, 'B': 35, 'E': 33}
 
@@ -16,26 +17,31 @@ class TankManager:
         GPIO.setup(self.motor_2['B'], GPIO.OUT)
         GPIO.setup(self.motor_2['E'], GPIO.OUT)
 
-    def action(self, action):
-        if action == 'up':
-            self.forward_motor(self.motor_1)
-            self.forward_motor(self.motor_2)
+        mediator.register('up', self.up)
+        mediator.register('right', self.right)
+        mediator.register('left', self.left)
+        mediator.register('down', self.down)
+        mediator.register('stop', self.stop)
 
-        if action == 'right':
-            self.forward_motor(self.motor_1)
-            self.backwards_motor(self.motor_2)
+    def up(self):
+        self.forward_motor(self.motor_1)
+        self.forward_motor(self.motor_2)
 
-        if action == 'left':
-            self.backwards_motor(self.motor_1)
-            self.forward_motor(self.motor_2)
+    def right(self):
+        self.forward_motor(self.motor_1)
+        self.backwards_motor(self.motor_2)
 
-        if action == 'down':
-            self.backwards_motor(self.motor_1)
-            self.backwards_motor(self.motor_2)
+    def left(self):
+        self.backwards_motor(self.motor_1)
+        self.forward_motor(self.motor_2)
 
-        if action == 'stop':
-            self.motor_stop(self.motor_1)
-            self.motor_stop(self.motor_2)
+    def down(self):
+        self.backwards_motor(self.motor_1)
+        self.backwards_motor(self.motor_2)
+
+    def stop(self):
+        self.motor_stop(self.motor_1)
+        self.motor_stop(self.motor_2)
 
     def forward_motor(self, motor):
         GPIO.output(motor['A'], GPIO.HIGH)
