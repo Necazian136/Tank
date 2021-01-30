@@ -5,4 +5,6 @@ class Mediator:
         self.actions[name] = func
 
     def call(self, name, *args, **kwargs):
-        return self.actions[name](*args, **kwargs)
+        if self.actions.get(name):
+            return self.actions[name](*args, **kwargs)
+        return None
