@@ -7,7 +7,7 @@ class WebSocketController:
     def __init__(self, mediator):
         self.mediator = mediator
         self.ws = None
-        websocket.enableTrace(True)
+        websocket.enableTrace(False)
 
         self.connect()
 
